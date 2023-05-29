@@ -1,4 +1,8 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 function benchmarkOpenSSL($data, $key, $method = 'aes-256-cbc')
 {
     $encrypted = openssl_encrypt($data, $method, $key, OPENSSL_RAW_DATA);
