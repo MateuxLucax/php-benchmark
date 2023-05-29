@@ -24,9 +24,9 @@
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
-    <title>Server Information</title>
+    <title>Estatísticas</title>
     <style>
         table {
             width: 100%;
@@ -40,18 +40,18 @@
     </style>
 </head>
 <body>
-    <h2>Server Information</h2>
+    <h2>Informações do servidor</h2>
 
-    <h3>Memory Usage (in MB)</h3>
+    <h3>Uso de memória (MB)</h3>
     <table>
         <tr>
             <th></th>
             <th>Total</th>
-            <th>Used</th>
-            <th>Free</th>
-            <th>Shared</th>
+            <th>Utilizada</th>
+            <th>Livre</th>
+            <th>Compartilhada</th>
             <th>Buff/Cache</th>
-            <th>Available</th>
+            <th>Disponível</th>
         </tr>
         <?php foreach($memory as $key => $value): ?>
             <tr>
@@ -66,10 +66,10 @@
         <?php endforeach; ?>
     </table>
 
-    <h3>CPU Load and Uptime</h3>
+    <h3>Uso de CPU e Uptime</h3>
     <p><?= $uptime; ?></p>
 
-    <h3>CPU Temperature</h3>
+    <h3>Temperatura da CPU</h3>
     <p><?= $temp . "°C" ?></p>
 </body>
 </html>
