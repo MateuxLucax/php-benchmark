@@ -1,36 +1,26 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 
-function benchmarkOpenSSL($data, $key, $method = 'aes-256-cbc')
-{
-    $encrypted = openssl_encrypt($data, $method, $key, OPENSSL_RAW_DATA);
-    $decrypted = openssl_decrypt($encrypted, $method, $key, OPENSSL_RAW_DATA);
+function fib($n) {
+    if ($n <= 1) {
+        return $n;
+    } else {
+        return fib($n - 1) + fib($n - 2);
+    }
 }
 
-
-$iterations = isset($_GET['iterations'])) ? intval($_GET['iterations']) : 100;
-
-$data = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
-$key = "VerySecretKey123";
-
-$totalExecutionTime = 0;
-
-for ($i = 0; $i < $iterations; $i++) {
-    $start_time = microtime(true);
-    
-    benchmarkOpenSSL($data, $key);
-    
-    $end_time = microtime(true);
-    $execution_time = $end_time - $start_time;
-    
-    $totalExecutionTime += $execution_time;
+if (!isset($_GET['n'])) {
+    die("Por favor, forneça um número como parâmetro. Exemplo: ?n=35");
 }
 
-$averageExecutionTime = $totalExecutionTime / $iterations;
-$totalExecutionTimeFormatted = number_format($totalExecutionTime, 4);
+$n = isset($_GET['n']) ? intval($_GET['n']) : 35;
 
-echo "Número de iterações: $iterations<br>";
-echo "Tempo total de execução: $totalExecutionTimeFormatted segundos";
-echo "Tempo de execução médio: $averageExecutionTime segundos<br>";
+if ($n < 0) {
+    die("Por favor, forneça um número válido não negativo como parâmetro.");
+}
+
+$start = microtime(true);
+
+echo fib($n);
+
+$time_elapsed_secs = microtime(true) - $start;
+echo "\nTempo gasto: $time_elapsed_secs segundos";
