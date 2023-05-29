@@ -8,10 +8,6 @@ function fib($n) {
     }
 }
 
-if (!isset($_GET['n'])) {
-    die("Por favor, forneça um número como parâmetro. Exemplo: ?n=35");
-}
-
 $n = isset($_GET['n']) ? intval($_GET['n']) : 35;
 
 if ($n < 0) {
