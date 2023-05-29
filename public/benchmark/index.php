@@ -1,34 +1,32 @@
 <?php
-
-function fibonacci($n) {
-    if ($n <= 0) {
-        return [];
-    } elseif ($n == 1) {
-        return [0];
-    } elseif ($n == 2) {
-        return [0, 1];
-    } else {
-        $fib = [0, 1];
-        for ($i = 2; $i < $n; $i++) {
-            $fib[$i] = $fib[$i - 1] + $fib[$i - 2];
-        }
-        return $fib;
-    }
+function benchmarkOpenSSL($data, $key, $method = 'aes-256-cbc')
+{
+    $encrypted = openssl_encrypt($data, $method, $key, OPENSSL_RAW_DATA);
+    $decrypted = openssl_decrypt($encrypted, $method, $key, OPENSSL_RAW_DATA);
 }
 
-if (isset($_GET['n'])) {
-    $n = intval($_GET['n']);
+
+$iterations = isset($_GET['iterations'])) ? intval($_GET['iterations']) : 100;
+
+$data = "Lorem ipsum dolor sit amet, consectetur adipiscing elit.";
+$key = "VerySecretKey123";
+
+$totalExecutionTime = 0;
+
+for ($i = 0; $i < $iterations; $i++) {
     $start_time = microtime(true);
-    $fibonacci_sequence = fibonacci($n);
-    $end_time = microtime(true);
     
+    benchmarkOpenSSL($data, $key);
+    
+    $end_time = microtime(true);
     $execution_time = $end_time - $start_time;
-
-    echo "Sequência de Fibonacci para n = $n:<br>";
-    echo implode(", ", $fibonacci_sequence);
-    echo "<br><br>";
-    echo "Tempo de execução: $execution_time segundos";
-} else {
-    echo "Por favor, forneça um valor para 'n' via parâmetro GET.";
+    
+    $totalExecutionTime += $execution_time;
 }
-?>
+
+$averageExecutionTime = $totalExecutionTime / $iterations;
+$totalExecutionTimeFormatted = number_format($totalExecutionTime, 4);
+
+echo "Número de iterações: $iterations<br>";
+echo "Tempo total de execução: $totalExecutionTimeFormatted segundos";
+echo "Tempo de execução médio: $averageExecutionTime segundos<br>";
