@@ -1,25 +1,34 @@
 <?php
-// Benchmark.php
-$start = microtime(true);
 
-// Get multiplier from GET parameter, default to 1 if not set
-$multiplier = isset($_GET['multiplier']) ? $_GET['multiplier'] : 1;
-
-// Test math operations
-for ($i = 0; $i < 1000000 * $multiplier; $i++) {
-    $a = $i * $i;
-    $b = sqrt($a);
+function fibonacci($n) {
+    if ($n <= 0) {
+        return [];
+    } elseif ($n == 1) {
+        return [0];
+    } elseif ($n == 2) {
+        return [0, 1];
+    } else {
+        $fib = [0, 1];
+        for ($i = 2; $i < $n; $i++) {
+            $fib[$i] = $fib[$i - 1] + $fib[$i - 2];
+        }
+        return $fib;
+    }
 }
 
-// Test string operations
-$string = '';
-for ($i = 0; $i < 100000 * $multiplier; $i++) {
-    $string .= 'a';
-    $string = md5($string);
+if (isset($_GET['n'])) {
+    $n = intval($_GET['n']);
+    $start_time = microtime(true);
+    $fibonacci_sequence = fibonacci($n);
+    $end_time = microtime(true);
+    
+    $execution_time = $end_time - $start_time;
+
+    echo "Sequência de Fibonacci para n = $n:<br>";
+    echo implode(", ", $fibonacci_sequence);
+    echo "<br><br>";
+    echo "Tempo de execução: $execution_time segundos";
+} else {
+    echo "Por favor, forneça um valor para 'n' via parâmetro GET.";
 }
-
-$end = microtime(true);
-
-$execution_time = ($end - $start);
-
-echo "Total Execution Time: ".$execution_time." seconds";
+?>
