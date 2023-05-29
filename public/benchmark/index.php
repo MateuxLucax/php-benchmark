@@ -1,4 +1,7 @@
 <?php
+
+ini_set('max_execution_time', 300);
+
 function fib($n) {
     if ($n <= 1) {
         return $n;
